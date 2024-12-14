@@ -20,7 +20,7 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       bookPath: fields[4] as String,
       title: fields[0] as String,
       author: fields[1] as String,
-      image: fields[2] as String,
+      image: fields[2] as Uint8List,
       pagesCount: fields[3] as int,
     );
   }

@@ -1,10 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:iread/features/home/domain/entities/book_entity.dart';
 
 class BookModel extends BookEntity {
   final String name;
   final String bookTitle;
   final String bookAuthor;
-  final String bookImage;
+  final Uint8List bookImage;
   final int bookPagesCount;
   final String bookLoaclPath;
   final String size;

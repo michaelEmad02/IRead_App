@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:hive/hive.dart';
 
 part 'book_entity.g.dart';
@@ -9,7 +11,7 @@ class BookEntity extends HiveObject {
   @HiveField(1)
   final String author;
   @HiveField(2)
-  final String image;
+  final Uint8List image;
   @HiveField(3)
   final int pagesCount;
   @HiveField(4)
