@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:iread/constants.dart';
+import 'package:iread/features/home/domain/entities/book_entity.dart';
+import 'package:iread/features/home/domain/entities/book_status_entity.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(BookEntityAdapter());
+  Hive.registerAdapter(BookStatusEntityAdapter());
+  await Hive.openBox<BookEntity>(kLatestBooksBox);
+  await Hive.openBox<BookStatusEntity>(kBooksStatusBox);
   runApp(const MyApp());
 }
 

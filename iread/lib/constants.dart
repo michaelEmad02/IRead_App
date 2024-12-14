@@ -10,9 +10,11 @@ Duration kTransitionDuration = const Duration(milliseconds: 250);
 
 const kMainfontFamily = "Item";
 
-const kFeaturedBox = "FeaturedBox";
+const kLatestBooksBox = "LatestBooksBox";
 
-const kNewestBox = "NewestBox";
+const kBooksStatusBox = "BooksStatusBox";
+
+const kFavoriteBooksBox = "FavoriteBooksBox";
 
 enum BookStatus {
   //normal,
