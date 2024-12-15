@@ -44,6 +44,7 @@ dependencies:
   pdf: ^3.11.1
   syncfusion_flutter_pdf: ^28.1.33
   pdf_render: ^1.4.7
+  flutter_bloc: ^8.1.6
   
 
 dev_dependencies:
