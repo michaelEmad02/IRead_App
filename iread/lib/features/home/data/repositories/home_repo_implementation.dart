@@ -22,6 +22,7 @@ class HomeRepoImplementation extends HomeRepo {
 
   @override
   Future<Either<Failure, List<BookStatusEntity>>>
+      fetchContinueReadingBooks() async {
     try {
       var result = await homeLocalDataSource.fetchContinueReadingBooks();
 
