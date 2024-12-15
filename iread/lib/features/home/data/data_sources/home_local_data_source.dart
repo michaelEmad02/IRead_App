@@ -28,6 +28,6 @@ class HomeLocalDataSourceImplementation extends HomeLocalDataSource {
 
   @override
   Future<List<BookEntity>> fetchLastOpennedBooks() {
-    return localStorageServices.getLatestBooks();
+    return hiveServices.getLastOpenedBooks();
   }
 }
