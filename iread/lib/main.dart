@@ -1,104 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iread/constants.dart';
+import 'package:iread/core/services/hive_services.dart';
+import 'package:iread/core/services/local_storage_services.dart';
+import 'package:iread/core/utils/app_router.dart';
+import 'package:iread/features/home/data/data_sources/home_local_data_source.dart';
+import 'package:iread/features/home/data/repositories/home_repo_implementation.dart';
 import 'package:iread/features/home/domain/entities/book_entity.dart';
 import 'package:iread/features/home/domain/entities/book_status_entity.dart';
+import 'package:iread/features/home/domain/use_cases/fetch_all_books_use_case.dart';
+import 'package:iread/features/home/presentation/manager/cubit/fetch_all_books_cubit.dart';
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(BookEntityAdapter());
   Hive.registerAdapter(BookStatusEntityAdapter());
   await Hive.openBox<BookEntity>(kLatestBooksBox);
+  await Hive.openBox<BookEntity>('BooksBox');
   await Hive.openBox<BookStatusEntity>(kBooksStatusBox);
-  runApp(const MyApp());
+  getIt.registerSingleton<HomeRepoImplementation>(HomeRepoImplementation(
+      homeLocalDataSource: HomeLocalDataSourceImplementation(
+          localStorageServices: LocalStorageServices(),
+          hiveServices: HiveServices())));
+  runApp(const IReadApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+final getIt = GetIt.instance;
+
+class IReadApp extends StatelessWidget {
+  const IReadApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => FetchAllBooksCubit(FetchAllBooksUseCase(
+              homeRepo: getIt.get<HomeRepoImplementation>()))
+            ..fetchAllBooksFiles(),
         ),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: 'Bookly',
+        theme: ThemeData.light().copyWith(
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: GoogleFonts.itimTextTheme(ThemeData.light().textTheme),
+        ),
+        routerConfig: AppRouter.router,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

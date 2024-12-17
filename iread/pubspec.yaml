@@ -45,7 +45,12 @@ dependencies:
   syncfusion_flutter_pdf: ^28.1.33
   pdf_render: ^1.4.7
   flutter_bloc: ^8.1.6
-  
+  percent_indicator: ^4.2.3
+  shimmer: ^3.0.0
+  get_it: ^8.0.2
+  go_router: ^14.3.0
+  google_fonts: ^6.2.1
+  image: ^4.0.15
 
 dev_dependencies:
   flutter_test:

@@ -12,6 +12,14 @@ class HiveServices {
     return box.values.where((book) => book.status == status.name).toList();
   }
 
+  Future<List<BookEntity>> getAllBooks() async {
+    var box = Hive.box<BookEntity>("BooksBox");
+    if (box.isEmpty) {
+      return [];
+    }
+    return box.values.toList();
+  }
+
   Future<List<BookEntity>> getLastOpenedBooks() async {
     var box = Hive.box<BookEntity>(kLatestBooksBox);
     if (box.isEmpty) {

@@ -8,7 +8,7 @@ final class FetchAllBooksInitial extends FetchAllBooksState {}
 final class FetchAllBooksLoading extends FetchAllBooksState {}
 
 final class FetchAllBooksLoaded extends FetchAllBooksState {
-  final List<BookEntity> books;
+  final List<File> books;
 
   FetchAllBooksLoaded({required this.books});
 }

@@ -17,11 +17,11 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BookEntity(
-      bookPath: fields[4] as String,
+      bookPath: fields[3] as String,
       title: fields[0] as String,
-      author: fields[1] as String,
-      image: fields[2] as Uint8List,
-      pagesCount: fields[3] as int,
+      // author: fields[1] as String,
+      image: fields[1] as Uint8List?,
+      pagesCount: fields[2] as int,
     );
   }
 
@@ -31,13 +31,13 @@ class BookEntityAdapter extends TypeAdapter<BookEntity> {
       ..writeByte(5)
       ..writeByte(0)
       ..write(obj.title)
+      // ..writeByte(1)
+      //..write(obj.author)
       ..writeByte(1)
-      ..write(obj.author)
-      ..writeByte(2)
       ..write(obj.image)
-      ..writeByte(3)
+      ..writeByte(2)
       ..write(obj.pagesCount)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.bookPath);
   }
 

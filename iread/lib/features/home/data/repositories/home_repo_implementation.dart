@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:iread/core/errors/failure.dart';
 import 'package:iread/features/home/data/data_sources/home_local_data_source.dart';
@@ -10,9 +12,9 @@ class HomeRepoImplementation extends HomeRepo {
 
   HomeRepoImplementation({required this.homeLocalDataSource});
   @override
-  Future<Either<Failure, List<BookEntity>>> fetchAllBooks() async {
+  Future<Either<Failure, List<File>>> fetchAllBooksFiles() async {
     try {
-      var result = await homeLocalDataSource.fetchAllBooks();
+      var result = await homeLocalDataSource.fetchAllBooksPaths();
 
       return right(result);
     } catch (e) {
