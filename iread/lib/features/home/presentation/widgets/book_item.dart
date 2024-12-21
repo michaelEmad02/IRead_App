@@ -39,7 +39,7 @@ class BookItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AspectRatio(
-                      aspectRatio: 2.8 / 3,
+                      aspectRatio: 2.7 / 3,
                       child: state.image.isEmpty
                           ? Image.asset(AssetsPath.testBookPath,
                               fit: BoxFit.fill)

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iread/constants.dart';
 import 'package:iread/features/home/presentation/widgets/home_view_body.dart';
 
 class HomeView extends StatelessWidget {
@@ -8,9 +7,10 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        backgroundColor: kThirdColor,
-        width: 200,
+      appBar: AppBar(),
+      drawer: const Drawer(
+        //backgroundColor: kThirdColor,
+        width: 250,
       ),
       body: const SafeArea(child: HomeViewBody()),
     );

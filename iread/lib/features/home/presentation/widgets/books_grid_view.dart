@@ -17,7 +17,7 @@ class BooksGridView extends StatelessWidget {
             primary: false,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
-                childAspectRatio: 3.4 / 2.5,
+                childAspectRatio: 3.5 / 2.5,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 10),
             //itemExtent:MediaQuery.of(context).size.width * .8,
