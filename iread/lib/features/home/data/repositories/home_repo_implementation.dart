@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
 import 'package:iread/core/errors/failure.dart';
@@ -38,6 +39,17 @@ class HomeRepoImplementation extends HomeRepo {
   Future<Either<Failure, List<BookEntity>>> fetchLastOpennedBooks() async {
     try {
       var result = await homeLocalDataSource.fetchLastOpennedBooks();
+
+      return right(result);
+    } catch (e) {
+      return left(Failure(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Uint8List>> fetchBookImage(String filePath) async {
+    try {
+      var result = await homeLocalDataSource.fetchBookImage(filePath);
 
       return right(result);
     } catch (e) {

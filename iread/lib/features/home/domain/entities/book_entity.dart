@@ -8,19 +8,14 @@ part 'book_entity.g.dart';
 class BookEntity extends HiveObject {
   @HiveField(0)
   final String title;
- // @HiveField(1)
-  //final String author;
   @HiveField(1)
   final Uint8List? image;
   @HiveField(2)
-  final int pagesCount;
-  @HiveField(3)
   final String bookPath;
-
-  BookEntity(
-      {required this.bookPath,
-      required this.title,
-     // required this.author,
-      required this.image,
-      required this.pagesCount});
+  BookEntity({
+    required this.bookPath,
+    required this.title,
+    // required this.author,
+    required this.image,
+  });
 }

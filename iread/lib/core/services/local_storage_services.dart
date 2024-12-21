@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:hive/hive.dart';
@@ -5,7 +6,6 @@ import 'package:iread/features/home/domain/entities/book_entity.dart';
 import 'package:pdf_render/pdf_render.dart' as pdf_render;
 import 'package:iread/features/home/data/models/book_model.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:image/image.dart' as img;
 
 class LocalStorageServices {
@@ -22,12 +22,52 @@ class LocalStorageServices {
           .listSync(recursive: true, followLinks: false)
           .whereType<File>()
           .where(
-              (file) => _bookExtensions.any((ext) => file.path.endsWith(ext)));
+              (file) => _bookExtensions.any((ext) => file.path.endsWith(ext)))
+          ;
       return entities.toList();
     } else {
       print("Storage permission denied");
       return [];
     }
+  }
+
+  Future<Uint8List> fetchBookImage(String filePath) async {
+    final doc = await pdf_render.PdfDocument.openFile(filePath);
+
+    final page = await doc.getPage(1); // Get the first page
+    final pageImage = await page.render();
+    doc.dispose();
+    var image =
+        convertToPng(pageImage.pixels, page.width.toInt(), page.height.toInt());
+    page.document.dispose();
+    return image;
+  }
+
+  Uint8List convertToPng(Uint8List rawPixels, int width, int height) {
+    /* final image = img.Image.fromBytes(
+        width: width, height: height, bytes: rawPixels.buffer);
+    return Uint8List.fromList(img.encodeJpg(image));*/
+    final image = img.Image(
+      width: width,
+      height: height,
+    );
+
+    // Iterate over raw pixel data
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int index = (y * width + x) * 4; // RGBA is 4 bytes per pixel
+        int r = rawPixels[index]; // Red channel
+        int g = rawPixels[index + 1]; // Green channel
+        int b = rawPixels[index + 2]; // Blue channel
+        int a = 255; // Set alpha to fully opaque
+
+        // Add the pixel to the image
+        image.setPixel(x, y, img.ColorInt32.rgba(r, g, b, a));
+      }
+    }
+
+    // Encode the image as PNG
+    return Uint8List.fromList(img.encodePng(image));
   }
 
   Future<List<BookModel>> getBooksInDevice() async {
@@ -65,7 +105,6 @@ class LocalStorageServices {
 
       final page = await doc.getPage(1); // Get the first page
       final pageImage = await page.render();
-      var pagesCount = doc.pageCount;
       doc.dispose();
       var image = convertToPng(
           pageImage.pixels, page.width.toInt(), page.height.toInt());
@@ -76,7 +115,6 @@ class LocalStorageServices {
         // bookTitle: data.documentInformation.title,
         //bookAuthor: data.documentInformation.author,
         bookImage: image,
-        bookPagesCount: pagesCount,
         bookLoaclPath: entity.path, bookTitle: entity.uri.pathSegments.last,
         //size: "${entity.lengthSync()} bytes",
       ));
@@ -86,49 +124,11 @@ class LocalStorageServices {
     return books;
   }
 
-  Uint8List convertToPng(Uint8List rawPixels, int width, int height) {
-    /* final image = img.Image.fromBytes(
-        width: width, height: height, bytes: rawPixels.buffer);
-    return Uint8List.fromList(img.encodeJpg(image));*/
-    final image = img.Image(
-      width: width,
-      height: height,
-    );
-
-    // Iterate over raw pixel data
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int index = (y * width + x) * 4; // RGBA is 4 bytes per pixel
-        int r = rawPixels[index]; // Red channel
-        int g = rawPixels[index + 1]; // Green channel
-        int b = rawPixels[index + 2]; // Blue channel
-        int a = 255; // Set alpha to fully opaque
-
-        // Add the pixel to the image
-        image.setPixel(x, y, img.ColorInt32.rgba(r, g, b, a));
-      }
-    }
-
-    // Encode the image as PNG
-    return Uint8List.fromList(img.encodePng(image));
-  }
-
-  Future<PdfDocument> _getPdfMetadata(String filePath) async {
+  /* Future<PdfDocument> _getPdfMetadata(String filePath) async {
     File pdfFile = File(filePath);
     List<int> bytes = await pdfFile.readAsBytes();
     return PdfDocument(inputBytes: bytes);
-  }
-
-  Future<Uint8List> _getPdfCoverImage(String filePath) async {
-    final doc = await pdf_render.PdfDocument.openFile(filePath);
-    final page = await doc.getPage(1); // Get the first page
-    final pageImage = await page.render();
-
-    doc.dispose();
-
-    return convertToPng(
-        pageImage.pixels, page.width.toInt(), page.height.toInt());
-  }
+  }*/
 
   /* Future<List<BookEntity>> getLatestBooks({
     int limit = 10,

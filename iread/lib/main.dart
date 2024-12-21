@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -7,6 +9,7 @@ import 'package:iread/constants.dart';
 import 'package:iread/core/services/hive_services.dart';
 import 'package:iread/core/services/local_storage_services.dart';
 import 'package:iread/core/utils/app_router.dart';
+import 'package:iread/core/utils/my_bloc_observer.dart';
 import 'package:iread/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:iread/features/home/data/repositories/home_repo_implementation.dart';
 import 'package:iread/features/home/domain/entities/book_entity.dart';
@@ -19,12 +22,13 @@ void main() async {
   Hive.registerAdapter(BookEntityAdapter());
   Hive.registerAdapter(BookStatusEntityAdapter());
   await Hive.openBox<BookEntity>(kLatestBooksBox);
-  await Hive.openBox<BookEntity>('BooksBox');
+  await Hive.openBox<Uint8List>(kBookImageBox);
   await Hive.openBox<BookStatusEntity>(kBooksStatusBox);
   getIt.registerSingleton<HomeRepoImplementation>(HomeRepoImplementation(
       homeLocalDataSource: HomeLocalDataSourceImplementation(
           localStorageServices: LocalStorageServices(),
           hiveServices: HiveServices())));
+  Bloc.observer = MyBlocObserver();
   runApp(const IReadApp());
 }
 

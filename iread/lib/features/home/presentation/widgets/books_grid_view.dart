@@ -25,7 +25,7 @@ class BooksGridView extends StatelessWidget {
             itemCount: state.books.length,
             itemBuilder: (context, index) {
               return BookItem(
-                selectedEntity: state.books[index],
+                selectedBook: state.books[index],
               );
             },
           );

@@ -15,6 +15,7 @@ const kLatestBooksBox = "LatestBooksBox";
 const kBooksStatusBox = "BooksStatusBox";
 
 const kFavoriteBooksBox = "FavoriteBooksBox";
+const kBookImageBox = "BookImageBox";
 
 enum BookStatus {
   //normal,
