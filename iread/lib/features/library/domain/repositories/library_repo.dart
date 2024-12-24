@@ -7,11 +7,11 @@ abstract class LibraryRepo {
   Future<Either<Failure, List<BookStatusEntity>>> fetchReadingBooks();
   Future<Either<Failure, List<BookStatusEntity>>> fetchCompletedBooks();
 
-  Future<Either<Failure, List<void>>> addBook({required BookStatusEntity book});
+  Future<Either<Failure, void>> addBook({required BookStatusEntity book});
 
-  Future<Either<Failure, List<void>>> updateBook(
+  Future<Either<Failure, void>> updateBook(
       {required BookStatusEntity book});
 
-  Future<Either<Failure, List<void>>> removeBook(
+  Future<Either<Failure, void>> removeBook(
       {required BookStatusEntity book});
 }
