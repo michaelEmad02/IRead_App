@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iread/constants.dart';
+import 'package:iread/core/entities/book_status_entity.dart';
 import 'package:iread/core/services/hive_services.dart';
 import 'package:iread/core/services/local_storage_services.dart';
 import 'package:iread/core/utils/app_router.dart';
@@ -13,7 +14,6 @@ import 'package:iread/core/utils/my_bloc_observer.dart';
 import 'package:iread/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:iread/features/home/data/repositories/home_repo_implementation.dart';
 import 'package:iread/features/home/domain/entities/book_entity.dart';
-import 'package:iread/features/home/domain/entities/book_status_entity.dart';
 import 'package:iread/features/home/domain/use_cases/fetch_all_books_use_case.dart';
 import 'package:iread/features/home/presentation/manager/cubit/fetch_all_books_cubit.dart';
 

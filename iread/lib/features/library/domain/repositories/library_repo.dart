@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:iread/core/errors/failure.dart';
-import 'package:iread/features/library/domain/entities/book_status_entity.dart';
+import 'package:iread/core/entities/book_status_entity.dart';
 
 abstract class LibraryRepo {
   Future<Either<Failure, List<BookStatusEntity>>> fetchToReadBooks();
