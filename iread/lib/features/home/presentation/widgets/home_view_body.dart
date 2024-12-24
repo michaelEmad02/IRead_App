@@ -18,7 +18,7 @@ class HomeViewBody extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "All Books",
+                  "كل الكتب",
                   style: Styles.textStyle24
                       .copyWith(color: kPrimaryColor, fontSize: 22),
                 ),
@@ -37,7 +37,7 @@ class HomeViewBody extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Lastest Open Books",
+                  "آخر الكتب المفتوحة",
                   style: Styles.textStyle24
                       .copyWith(color: kPrimaryColor, fontSize: 22),
                 ),
@@ -56,7 +56,7 @@ class HomeViewBody extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Continue Reading",
+                  "أكمل القراءة",
                   style: Styles.textStyle24
                       .copyWith(color: kPrimaryColor, fontSize: 22),
                 ),

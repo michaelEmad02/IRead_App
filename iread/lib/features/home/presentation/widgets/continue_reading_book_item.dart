@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iread/constants.dart';
 import 'package:iread/core/utils/assets_path.dart';
 import 'package:iread/core/utils/styles.dart';
-import 'package:iread/features/home/domain/entities/book_status_entity.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ContinueReadingBookItem extends StatefulWidget {

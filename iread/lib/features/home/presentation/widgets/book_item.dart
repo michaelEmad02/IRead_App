@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iread/constants.dart';
+import 'package:iread/core/utils/app_router.dart';
 import 'package:iread/core/utils/assets_path.dart';
 import 'package:iread/core/utils/styles.dart';
 import 'package:iread/features/home/data/repositories/home_repo_implementation.dart';
@@ -26,8 +28,8 @@ class BookItem extends StatelessWidget {
           if (state is FetchBookImageLoaded) {
             return InkWell(
               onTap: () {
-                // GoRouter.of(context)
-                //    .push(AppRouter.kBookDetails, extra: selectedEntity);
+                GoRouter.of(context).push(AppRouter.kPdfViewerWithTracking,
+                    extra: selectedBook.path);
               },
               borderRadius: BorderRadius.circular(15),
               child: Container(

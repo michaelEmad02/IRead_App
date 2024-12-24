@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -56,6 +56,13 @@ class IReadApp extends StatelessWidget {
           textTheme: GoogleFonts.itimTextTheme(ThemeData.light().textTheme),
         ),
         routerConfig: AppRouter.router,
+        localizationsDelegates: const [
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale("ar", "AE")],
+        locale: const Locale("ar", "AE"),
       ),
     );
   }
