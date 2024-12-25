@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iread/constants.dart';
+import 'package:iread/core/utils/app_router.dart';
 import 'package:iread/core/utils/assets_path.dart';
 import 'package:iread/core/utils/styles.dart';
 import 'package:iread/features/home/presentation/widgets/home_view_body.dart';
@@ -47,6 +49,9 @@ class HomeView extends StatelessWidget {
                   "كتب سأقرأها",
                   style: Styles.textStyle16,
                 ),
+                onTap: () {
+                  GoRouter.of(context).push(AppRouter.kToReadBooksView);
+                },
               ),
               ListTile(
                 minTileHeight: 30,

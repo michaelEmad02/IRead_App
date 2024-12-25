@@ -16,6 +16,8 @@ import 'package:iread/features/home/data/repositories/home_repo_implementation.d
 import 'package:iread/features/home/domain/entities/book_entity.dart';
 import 'package:iread/features/home/domain/use_cases/fetch_all_books_use_case.dart';
 import 'package:iread/features/home/presentation/manager/cubit/fetch_all_books_cubit.dart';
+import 'package:iread/features/library/data/data_sources/library_local_data_source.dart';
+import 'package:iread/features/library/data/repositories/library_repo_implementation.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -28,11 +30,16 @@ void main() async {
       homeLocalDataSource: HomeLocalDataSourceImplementation(
           localStorageServices: LocalStorageServices(),
           hiveServices: HiveServices())));
+  getItForLibrary.registerSingleton<LibraryRepoImplementation>(
+      LibraryRepoImplementation(
+          libraryLocalDataSource: LibraryLocalDataSourceImplementation(
+              hiveServices: HiveServices())));
   Bloc.observer = MyBlocObserver();
   runApp(const IReadApp());
 }
 
 final getIt = GetIt.instance;
+final getItForLibrary = GetIt.instance;
 
 class IReadApp extends StatelessWidget {
   const IReadApp({super.key});
